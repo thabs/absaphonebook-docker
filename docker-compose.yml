@@ -1,0 +1,60 @@
+version: "3"
+services:
+  mongo:
+    image: mongo:latest
+    restart: always
+    volumes:
+      - ./mongodata:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: phonebook
+  #mongo-express:
+  #  image: mongo-express
+  #  restart: always
+  #  ports:
+  #    - 8081:8081
+  #  depends_on:
+  #    - mongo # link this service to the database service
+  #  environment:
+  #    ME_CONFIG_MONGODB_ADMINUSERNAME: root
+  #    ME_CONFIG_MONGODB_ADMINPASSWORD: example
+  redis:
+    image: "redis:latest"
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - "4040:80"
+  api:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./server
+    depends_on:
+      - mongo # link this service to the database service
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    command: nodemon -L index.js
+    environment:
+      - NODE_ENV=development
+      - SERVER_PORT=4040
+      - MONGO_DB_URL=mongodb://mongo:27017/phonebook
+      - MONGO_DB_USERNAME=developer
+      - MONGO_DB_PASSWORD=password123
+      #- MONGO_DB_URI=mongodb://developer:devpassword12@ds211096.mlab.com:11096/phonebook
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+  client:
+    stdin_open: true
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./client
+    volumes:
+      - /app/node_modules
+      - ./client:/app

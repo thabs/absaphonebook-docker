@@ -1,0 +1,22 @@
+{
+  "swaggerDefinition": {
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Phonebook API",
+      "description": "ABSA Phonebook Assessment",
+      "contact": {
+        "name": "Thabiso Sekhoto",
+        "url": "https://www.absa.co.za",
+        "email": "tsekhoto@gmail.com"
+      },
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:4040/api",
+        "description": "Development server"
+      }
+    ]
+  },
+  "apis": ["./routes/*.js", "./models/*.js"]
+}

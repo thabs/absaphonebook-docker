@@ -1,0 +1,15 @@
+{
+  "name": "absa-phonebook",
+  "authors": ["thabiso-sekhoto"],
+  "description": "Phonebook client",
+  "main": "public/index.html",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "build"
+  ],
+  "private": true
+}

@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "appName": "phonebook",
+  "apiSettings": {
+    "headers": {
+      "Cache-Control": "no-cache",
+      "Content-Type": "application/json"
+    },
+    "timeout": 45000
+  },
+  "baseURL": "/api"
+}
